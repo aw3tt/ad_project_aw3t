@@ -1,56 +1,83 @@
 <template>
-  <v-dialog v-model="modal" max-width="400px">
-    <!-- Кнопка для открытия модального окна -->
+  <v-dialog v-model="modal" width="500px">
     <template v-slot:activator="{ props }">
-      <v-btn v-bind="props" color="success">BUY</v-btn>
+      <v-btn v-bind="props" color="warning">Buy</v-btn>
     </template>
+    <v-card class="pa-3">
+      <v-row justify="center">
+        <v-col cols="12">
+          <v-card-title>
+            <h1 class="text--primary">Do you wan't to buy it?</h1>
+          </v-card-title>
+        </v-col>
+      </v-row>
 
-    <!-- Карточка с информацией о покупке -->
-    <v-card class="pa-4">
-      <v-card-title class="text-h5 text-center">
-        Buy It
-      </v-card-title>
+      <v-row justify="center">
+        <v-col cols="12">
+          <v-card-text>
+            <v-text-field
+                name="name"
+                label="Your name"
+                type="text"
+                v-model="name"
+            >
+            </v-text-field>
+            <v-text-field
+                name="phone"
+                label="Your phone"
+                type="text"
+                v-model="phone"
+            >
+            </v-text-field>
+          </v-card-text>
+        </v-col>
+      </v-row>
 
-      <v-card-text class="text-center">
-        <p>{{ ad?.title }}</p>
-        <p class="text-subtitle-1">Price: {{ ad?.price }}$</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      </v-card-text>
-
-      <v-card-actions class="justify-end">
-        <v-btn color="grey darken-1" @click="modal = false">Cancel</v-btn>
-        <v-btn color="success" @click="buyAd">Buy It</v-btn>
-      </v-card-actions>
+      <v-row justify="center">
+        <v-col cols="12">
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn @click="onClose">Close</v-btn>
+            <v-btn @click="onSave" color="success">Buy It!</v-btn>
+          </v-card-actions>
+        </v-col>
+      </v-row>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
 export default {
-  props: {
-    ad: Object, // Ожидаем объект объявления
-  },
+  props: ['ad'],
   data() {
     return {
-      modal: false, // Управление открытием модального окна
-    };
+      modal: false,
+      name: '',
+      phone: ''
+    }
   },
+
   methods: {
-    buyAd() {
-      console.log(`Buying: ${this.ad?.title}`);
-      this.modal = false; // Закрываем модальное окно после покупки
+    onClose() {
+      this.name = ""
+      this.phone = ""
+      this.modal = false
     },
+    onSave() {
+      if (this.name !== '' && this.phone !== '') {
+        this.$store.dispatch('createOrder', {
+          name: this.name,
+          phone: this.phone,
+          adId: this.ad.id,
+          userId: this.ad.userId
+        })
+            .finally(() => {
+              this.name = ""
+              this.phone = ""
+              this.modal = false
+            })
+      }
+    }
   },
-};
+}
 </script>
-
-<style scoped>
-/* Дополнительные стили */
-.v-card {
-  border-radius: 10px;
-}
-
-.v-btn {
-  text-transform: none;
-}
-</style>
