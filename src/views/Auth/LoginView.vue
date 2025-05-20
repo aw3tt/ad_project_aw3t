@@ -16,7 +16,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="onSubmit" :disabled="!valid">
+            <v-btn color="primary" @click="onSubmit" :loading="loading" :disabled="!valid">
               Login
             </v-btn>
           </v-card-actions>
@@ -42,6 +42,12 @@ export default {
         v => !!v || 'Name is required',
         v => (v && v.length >= 6) || 'Password must be more or equel than 6 characters',
       ],
+    }
+  },
+
+  computed: {
+    loading() {
+      return this.$store.getters.loading
     }
   },
 
