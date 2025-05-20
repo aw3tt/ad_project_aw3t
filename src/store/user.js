@@ -83,6 +83,9 @@ export default {
                 throw error;
             }
         },
+        logoutUser({commit}) {
+            commit('setUser', null)
+        }
     },
     getters: {
         user(state) {
@@ -94,8 +97,8 @@ export default {
         error(state) {
             return state.error;
         },
+        isUserLoggedln(state) {
+            return state.user !== null
+        }
     },
-    isUserLoggedln(state) {
-        return state.user !== null
-    }
 };
