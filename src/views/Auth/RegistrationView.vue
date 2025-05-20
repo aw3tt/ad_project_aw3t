@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      if (this.$refs.form.validate()) {
+      if (this.$refs.form.validate()){
         const user = {
           email: this.email,
           password: this.password
