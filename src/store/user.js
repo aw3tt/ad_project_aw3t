@@ -95,4 +95,7 @@ export default {
             return state.error;
         },
     },
+    isUserLoggedln(state) {
+        return state.user !== null
+    }
 };
