@@ -2,10 +2,10 @@
   <v-container>
     <v-row justify="center">
       <v-col cols="12" sm="8" lg="6">
-
         <v-card class="elevetion-12">
           <v-toolbar dark color="primary">
-            <v-toolbar-title>Login
+            <v-toolbar-title>
+              Login
             </v-toolbar-title>
           </v-toolbar>
           <v-card-text>
@@ -15,10 +15,10 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-
             <v-spacer></v-spacer>
-
-            <v-btn color="primary" @click="onSubmit" :disabled="!valid">Login</v-btn>
+            <v-btn color="primary" @click="onSubmit" :disabled="!valid">
+              Login
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -28,21 +28,23 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      email: "",
-      password: "",
+      email:"",
+      password:"",
       valid: false,
       emailRules: [
-        v => !!v || 'E-mail is required',
+        v => !!v || 'E-mail is reqired',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
       ],
+
       passwordRules: [
         v => !!v || 'Name is required',
         v => (v && v.length >= 6) || 'Password must be more or equel than 6 characters',
-      ]
+      ],
     }
   },
+
   methods: {
     onSubmit(){
       if (this.$refs.form.validate()){
@@ -50,7 +52,13 @@ export default {
           email: this.email,
           password: this.password
         }
-        console.log(user)
+        this.$store.dispatch('loginUser', user)
+            .then(() => {
+              this.$router.push("/")
+            })
+            .catch((err) => {
+              console.log(err.message)
+            })
       }
     }
   }
