@@ -52,11 +52,11 @@ export default {
             if (isRequestOk) {
                 await promise.then(() => {
                     commit("setUser", new User(1, email, password));
-                    commit("setLoading", true);
+                    commit("setLoading", false);
                 });
             } else {
                 await promise.then(() => {
-                    commit("setLoading", true);
+                    commit("setLoading", false);
                     commit("setError", "Ошибка логина или пароля");
                     throw "Упс... Ошибка логина или пароля";
                 });
