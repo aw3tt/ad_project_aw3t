@@ -17,14 +17,14 @@ export default {
             },
             {
                 title: "Third",
-                desc: "Thitd Desc",
+                desc: "Third Desc",
                 promo: true,
                 src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
                 id: "3",
             },
             {
-                title: "Fouth",
-                desc: "Fouth Desc",
+                title: "Fourth ",
+                desc: "Fourth Desc",
                 promo: true,
                 src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
                 id: "4",
@@ -47,8 +47,8 @@ export default {
             return state.ads;
         },
         promoAds(state) {
-            return state.ads.filter((ad) => {
-                return ad.promo;
+            return state.ads.filter(ad => {
+                return ad.promo
             });
         },
         myAds(state) {
